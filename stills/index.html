@@ -64,6 +64,11 @@
   }
   @media (prefers-reduced-motion: reduce) { .view, .hint { transition-duration: .01ms; } }
 
+  /* the faint dot grid of the other pages, laid over the ball's canvas (the 3D drawing itself is untouched),
+     fading out toward the middle so the ball stays clean */
+  #ball-view::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background: radial-gradient(rgba(254, 250, 224, .12) 1px, transparent 1.2px) 0 0 / 22px 22px;
+    -webkit-mask: radial-gradient(circle at 50% 50%, transparent 0 30vmin, #000 44vmin); mask: radial-gradient(circle at 50% 50%, transparent 0 30vmin, #000 44vmin); }
   /* film-strip edges, same as the about page */
   :root { --edge: 44px; }
   .film-edge { position: fixed; top: 0; bottom: 0; width: var(--edge); z-index: 20; pointer-events: none; background: repeat-y 0 0 / 100% auto; }
