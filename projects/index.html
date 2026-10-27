@@ -98,7 +98,7 @@ main { max-width: 1180px; overflow-x: clip; }
 
 /* ---- a case file ---- */
 .case[hidden] { display: none; }
-.case-title { margin: 6px 0 24px; font: 400 clamp(22px, 2.6vw, 32px)/1.15 var(--type); letter-spacing: .04em; }
+.case-title { margin: 6px 0 24px; font: 400 15px/1.4 var(--type); letter-spacing: .2em; text-transform: uppercase; }   /* same as the page header */
 .file { position: relative; display: flex; padding: 18px 0 18px 18px; margin-right: 46px; background: var(--fc); border-radius: 6px 0 6px 6px; box-shadow: 0 20px 40px rgba(30, 40, 20, .22); }
 .case.is-in .file { animation: swing .85s cubic-bezier(.2, .85, .25, 1) both; transform-origin: 0 100%; }
 @keyframes swing { 0% { transform: translate(-30%, 70vh) rotate(-38deg); } 70% { transform: translate(0, -6px) rotate(.6deg); } 100% { transform: none; } }
