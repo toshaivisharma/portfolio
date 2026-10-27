@@ -241,6 +241,8 @@ body.on-about .film-edge { display: block; }   /* film edges only on the about p
 .loves { position: relative; z-index: 3; max-width: 1000px; margin-top: 56px; }
 .loves h3 { margin: 0 0 18px; font: 400 15px var(--type); letter-spacing: .2em; text-transform: uppercase; }
 .loves-list { margin: 0; padding: 0; list-style: none; font-size: clamp(15px, 1.25vw, 18px); line-height: 2.1; letter-spacing: .1em; }
+.loves-list li { break-inside: avoid; }
+@media (min-width: 760px) { .loves-list { columns: 2; column-gap: 48px; } }
 .loves-list a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
 .loves-list a:hover { color: #fff; }
 .loves-list .why { color: rgba(254, 250, 224, .72); }
@@ -437,7 +439,23 @@ body.on-about .site-foot { width: calc(100% - 2 * (var(--edge) + 16px)); }
       <h3 id="loves-title">running list of websites i love</h3>
       <ul class="loves-list">
         <!-- one per line: <li><a href="https://..." target="_blank" rel="noopener">site name</a> <span class="why">a few words on why</span></li> -->
-        <li class="loves-empty">[the sites go here, coming soon]</li>
+        <li><a href="https://variant.com/community" target="_blank" rel="noopener">variant.com/community</a></li>
+        <li><a href="https://jonathanharris.org/works/data" target="_blank" rel="noopener">jonathanharris.org/works/data</a></li>
+        <li><a href="https://stympaul.com/" target="_blank" rel="noopener">stympaul.com</a></li>
+        <li><a href="https://pudding.cool/" target="_blank" rel="noopener">pudding.cool</a></li>
+        <li><a href="https://neal.fun/wiki-spy/" target="_blank" rel="noopener">neal.fun/wiki-spy</a></li>
+        <li><a href="https://www.ashleycai.com/" target="_blank" rel="noopener">ashleycai.com</a></li>
+        <li><a href="https://floor796.com/" target="_blank" rel="noopener">floor796.com</a></li>
+        <li><a href="https://neal.fun/" target="_blank" rel="noopener">neal.fun</a></li>
+        <li><a href="https://radio.garden/" target="_blank" rel="noopener">radio.garden</a></li>
+        <li><a href="https://poolsuite.net/" target="_blank" rel="noopener">poolsuite.net</a></li>
+        <li><a href="https://type-garden.vercel.app/" target="_blank" rel="noopener">type-garden.vercel.app</a></li>
+        <li><a href="https://www.ideanow.online/blogs/superbooks" target="_blank" rel="noopener">ideanow.online/blogs/superbooks</a></li>
+        <li><a href="https://www.scannedfashionworld.com/" target="_blank" rel="noopener">scannedfashionworld.com</a></li>
+        <li><a href="https://www.archivepdf.net/scans" target="_blank" rel="noopener">archivepdf.net/scans</a></li>
+        <li><a href="https://pudding.cool/projects/clocks/" target="_blank" rel="noopener">pudding.cool/projects/clocks</a></li>
+        <li><a href="https://www.yejis.world/" target="_blank" rel="noopener">yejis.world</a></li>
+        <li><a href="https://1of1studio.com/" target="_blank" rel="noopener">1of1studio.com</a></li>
       </ul>
     </section>
     <div class="snaps">
