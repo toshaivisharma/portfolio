@@ -349,6 +349,46 @@ body.on-about .site-foot { width: calc(100% - 2 * (var(--edge) + 16px)); }
   .receipt { margin-top: 6px; }
 }
 @media (prefers-reduced-motion: reduce) { .receipt, .actions { transition: none; } }
+
+/* ---------- phones held upright: the roll stands on end, canister at the top, and you scroll down through the frames ---------- */
+@media (max-width: 600px) and (orientation: portrait) {
+  .home { gap: 8px; padding-bottom: 40px; }
+  .stage { --rw: min(54vw, 230px); --rl: calc(var(--rw) * 1144 / 219);
+    display: block; position: relative; height: calc(var(--rl) * .9); overflow: visible; margin: 0; padding: 12px 0 0; }
+  /* the drawing is turned a quarter clockwise around its top-left corner, then slid back into place */
+  .roll { position: absolute; top: 12px; left: calc(50% - var(--rw) / 2); width: var(--rl); margin: 0;
+    transform-origin: 0 0; transform: translateX(var(--rw)) rotate(90deg);
+    filter: drop-shadow(12px 0 16px rgba(55, 60, 45, .22)) drop-shadow(2px 0 2px rgba(55, 60, 45, .18)); }
+  /* the sketches turn back upright inside their frames */
+  .cell .art { container-type: size; }
+  .cell .art img { inset: auto; left: 50%; top: 50%; width: 100cqh; height: 100cqw; translate: -50% -50%; rotate: -90deg; padding: 7%; }
+  /* labels sit beside the strip and read across the screen */
+  .cell .label { writing-mode: vertical-rl; rotate: calc(180deg + var(--tilt)); font-size: 14px; }
+  .cell[data-corner="top"] .label { transform-origin: center; bottom: calc(83% + 12px); }
+  .cell[data-corner="bottom"] .label { transform-origin: center; top: calc(89% + 12px); }
+}
+
+/* phones don't pin a "fixed" background (iOS stretches it over the whole page), so the roses sit on their own fixed layer */
+@media (max-width: 760px) {
+  body:not(.on-about) { background: #c8cabb; }
+  body:not(.on-about)::before { content: ""; position: fixed; inset: 0; z-index: -1; background: var(--bg) center / cover; pointer-events: none; }
+}
+
+/* ---------- about page on phones: the prints sit in their own little pile above the text instead of on top of it ---------- */
+@media (max-width: 600px) {
+  .about-body { display: flex; flex-direction: column; min-height: 0; }
+  .about-head { order: 0; margin-bottom: 8px; }
+  .about-head .hint { display: none; }
+  .snaps { order: 1; position: relative; inset: auto; height: 330px; margin: 0 0 28px; }
+  .about-text { order: 2; }
+  .loves { order: 3; }
+  .snap { --w: 150px; } .snap--tall { --w: 124px; }
+  .snap figcaption { font-size: 11px; }
+  .snap[data-snap="a"] { left: 0; top: 18px; }
+  .snap[data-snap="d"] { left: auto; right: 4px; top: 6px; }
+  .snap[data-snap="b"] { left: 4%; top: 168px; }
+  .snap[data-snap="c"] { left: 44%; top: 178px; }
+}
 :root { --bg: url(assets/bg-1.jpg); }
 </style>
 </head>
