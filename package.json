@@ -1,0 +1,13 @@
+{
+  "name": "spotify-receipt",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "token": "node scripts/get-refresh-token.mjs",
+    "test": "node scripts/test-top-tracks.mjs",
+    "check-playlist": "node scripts/check-playlist.mjs"
+  }
+}
