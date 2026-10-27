@@ -52,7 +52,7 @@ main { flex: 1; width: 100%; max-width: 1240px; margin: 0 auto; padding: 32px 8p
 </style>
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Old+Standard+TT:wght@400;700&family=Libre+Franklin:wght@400;500;600;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Old+Standard+TT:wght@400;700&family=Libre+Franklin:wght@300;400;500;600;700;800&display=swap">
 <style>
 /* Cloister Black (Dieter Steffmann, freeware): the closest free match to the Chicago Tribune masthead. */
 @font-face { font-family: "Cloister Black"; font-display: swap;
@@ -72,6 +72,7 @@ main { flex: 1; width: 100%; max-width: 1240px; margin: 0 auto; padding: 32px 8p
   --f-head: "Playfair Display", Georgia, serif;
   --f-body: "Old Standard TT", Georgia, serif;
   --f-ui: "Libre Franklin", "Franklin Gothic Medium", "Helvetica Neue", Arial, sans-serif;
+  --f-news: "Libre Franklin", "Franklin Gothic Medium", "Helvetica Neue", Arial, sans-serif;   /* type printed on the papers */
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
@@ -127,8 +128,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .rack { perspective: 1400px; padding-top: 24px; }
 .paper {
   --tilt: 0deg;
-  position: relative; display: block; width: 100%; aspect-ratio: 1 / 1.08; max-width: 100%;
-  margin-top: -52%; padding: 16px 16px 0; overflow: hidden; cursor: pointer;
+  position: relative; display: flex; flex-direction: column; width: 100%; aspect-ratio: 1 / 1.32; max-width: 100%;
+  margin-top: -76%; padding: 14px 14px 10px; overflow: hidden; cursor: pointer;
   background: var(--paper);
   background-image: linear-gradient(180deg, rgba(255,255,255,.55), transparent 30%, rgba(0,0,0,.03) 70%, rgba(0,0,0,.07));
   color: var(--ink); text-align: left; border: 0; border-top: 1px solid #fff; font: inherit;
@@ -136,37 +137,50 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   box-shadow: 0 -10px 18px -10px rgba(0,0,0,.28), 0 1px 0 var(--paper-edge);
   transform-origin: 50% 100%;
   transform: rotateX(var(--lean, 10deg)) rotateZ(var(--tilt)) translateY(var(--lift, 0px));
-  transition: transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .3s;
+  transition: transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .3s, translate .62s cubic-bezier(.6,0,.3,1), opacity .5s ease;
+  transition-delay: 0s, 0s, var(--delay, 0s), var(--delay, 0s);
   opacity: 0; animation: drop .7s cubic-bezier(.2,.8,.2,1) forwards; animation-delay: calc(var(--i) * 80ms);
 }
+.paper.landed { animation: none; opacity: 1; }
 .paper:first-child { margin-top: 0; }
 .paper:hover, .paper:focus-visible { --lift: -26px; --lean: 4deg; box-shadow: 0 -18px 28px -12px rgba(0,0,0,.35); }
 .paper:focus-visible { outline: 3px solid var(--press); outline-offset: 3px; }
 .paper.active { --lean: 6deg; }
 @keyframes drop { from { opacity: 0; translate: 0 -40px; } to { opacity: 1; translate: 0 0; } }
+/* tapping a paper: the rest of the rack slides off to the sides, like the reference */
+.rack.is-away .paper:not(.is-lifted) { translate: calc(var(--side) * 118vw) 34px; opacity: 0; }
+.paper.is-lifted { visibility: hidden; }
 
-.ear { display: flex; justify-content: space-between; gap: 8px; font: 600 8px/1.2 var(--f-ui); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
-.ear .tag { color: var(--press); }
-.mast { margin: 4px 0 6px; text-align: center; line-height: 1; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: clip; }
-.mast.m-fraktur { font: 400 clamp(32px, 10.5vw, 44px)/1 var(--f-mast); }
-.mast.m-didone { font: 900 clamp(24px, 7.6vw, 32px)/1 var(--f-head); text-transform: uppercase; letter-spacing: -.01em; transform: scaleY(1.15); }
-.mast.m-slab { font: 800 clamp(26px, 8.6vw, 36px)/1 var(--f-ui); letter-spacing: -.045em; color: var(--accent); }
-.mast.m-slab::before { content: ""; display: block; height: 5px; background: var(--accent); margin-bottom: 6px; }
-.dateline { display: flex; justify-content: space-between; gap: 8px; padding: 3px 0; border-block: 1px solid var(--ink);
-  font: 400 9px/1.3 var(--f-body); color: var(--ink-2); }
-.dateline span:nth-child(2) { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.kicker { margin-top: 8px; font: 700 10px/1.2 var(--f-ui); letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
-.hed { margin: 3px 0 0; font: 900 clamp(20px, 6.4vw, 27px)/1.02 var(--f-head); letter-spacing: -.015em; text-wrap: balance; color: var(--ink); }
-.body { display: grid; grid-template-columns: 1.15fr 1fr; gap: 10px; margin-top: 10px; }
-.dek { margin: 0; font: italic 400 12px/1.32 var(--f-body); color: var(--ink-2); min-width: 0; }
-.plate { position: relative; aspect-ratio: 4 / 3; max-width: 100%; background: var(--accent); overflow: hidden; }
-.plate::before { content: ""; position: absolute; inset: 0;
-  background: radial-gradient(circle at 30% 40%, rgba(255,255,255,.55) 0 18%, transparent 19%),
-              radial-gradient(rgba(0,0,0,.5) 1.1px, transparent 1.4px) 0 0 / 5px 5px; mix-blend-mode: multiply; }
-.plate::after { content: attr(data-glyph); position: absolute; right: 6px; bottom: 2px; font: 900 40px/1 var(--f-head); color: rgba(255,255,255,.88); }
-.cols { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-.cols i { display: block; height: 70px;
-  background: repeating-linear-gradient(var(--ink-3) 0 1.5px, transparent 1.5px 6px); opacity: .45; }
+/* ── a front page, after the Chicago Tribune: text first, no photos ── */
+.n-mast { margin: 0 0 6px; text-align: center; white-space: nowrap; overflow: hidden; font: 400 clamp(36px, 11.6vw, 50px)/.95 var(--f-mast); letter-spacing: -.005em; color: var(--ink); }
+.n-dl b { flex: none; font-weight: 800; }
+.n-dl { display: flex; justify-content: space-between; align-items: center; gap: 6px; padding: 4px 0 3px; border-top: 1px solid var(--ink); border-bottom: 2.5px solid var(--ink);
+  font: 800 7.5px/1.2 var(--f-news); letter-spacing: .02em; text-transform: uppercase; white-space: nowrap; overflow: hidden; }
+.n-dl span { font-weight: 400; text-transform: none; color: var(--ink-2); }
+.n-dl em { min-width: 0; overflow: hidden; text-overflow: ellipsis; font-style: normal; }
+.n-fine { display: flex; justify-content: space-between; margin: 3px 0 8px; font: 400 5.6px/1.2 var(--f-news); letter-spacing: .02em; text-transform: uppercase; color: var(--ink-2); }
+.n-grid { flex: 1; min-height: 0; display: grid; grid-template-columns: 27% 1fr; gap: 0 9px; overflow: hidden; }
+.n-side { min-width: 0; padding-right: 9px; border-right: 1px solid rgba(20,20,20,.25); overflow: hidden; }
+.n-orn { display: grid; place-items: center; aspect-ratio: 4 / 4.6; border: 1px solid var(--ink); font: 900 44px/1 var(--f-head); color: var(--ink);
+  background: repeating-linear-gradient(-45deg, transparent 0 3px, rgba(20,20,20,.07) 3px 4px); }
+.n-cap { margin: 3px 0 7px; font: italic 400 5.8px/1.25 var(--f-body); color: var(--ink-2); }
+.n-side h4 { margin: 0 0 3px; font: 400 15px/1.02 var(--f-body); letter-spacing: -.01em; }
+.n-side .n-sub { margin: 0 0 5px; font: 400 8.4px/1.18 var(--f-body); display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+.n-by { margin: 0 0 4px; font: 700 6.4px/1.2 var(--f-news); } .n-by small { display: block; font-weight: 400; font-size: 5.4px; text-transform: uppercase; letter-spacing: .03em; color: var(--ink-2); }
+.n-main { min-width: 0; overflow: hidden; }
+.n-hed { margin: 0 0 6px; font: 900 clamp(24px, 7.8vw, 33px)/.98 var(--f-head); letter-spacing: -.02em; text-wrap: balance; color: var(--ink); }
+.n-decks { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 7px; }
+.n-decks p { margin: 0; font: 400 8.6px/1.2 var(--f-body); }
+.n-decks p + p { padding-left: 8px; border-left: 1px solid rgba(20,20,20,.25); }
+.n-decks b { font: 800 7.6px/1 var(--f-news); text-transform: uppercase; letter-spacing: .02em; }
+.n-story { columns: 2; column-gap: 9px; column-rule: 1px solid rgba(20,20,20,.18); font: 400 6.6px/1.32 var(--f-body); text-align: justify; hyphens: auto; }
+.n-story p { margin: 0 0 3px; text-indent: 1em; } .n-story .n-by { text-indent: 0; }
+.n-story .n-turn { font-style: italic; text-indent: 0; } .n-story .n-turn b { font-style: normal; font-family: var(--f-news); }
+.n-type { display: block; height: 58px; margin: 0 0 3px; background: repeating-linear-gradient(var(--ink-3) 0 1px, transparent 1px 4.4px); opacity: .55; }
+.n-plan { flex: none; display: grid; grid-template-columns: 1.15fr repeat(3, 1fr); gap: 7px; margin-top: 7px; padding-top: 5px; border-top: 2px solid var(--ink); font: 400 6px/1.25 var(--f-body); }
+.n-plan h5 { margin: 0; font: 300 13px/1 var(--f-news); letter-spacing: -.02em; }
+.n-plan div + div { padding-left: 7px; border-left: 1px solid rgba(20,20,20,.25); min-width: 0; }
+.n-plan b { display: block; margin-bottom: 1px; font: 700 6.4px/1.15 var(--f-news); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
 /* ── list view ───────────────────────────── */
 .list { display: grid; gap: 10px; padding-top: 16px; }
@@ -204,21 +218,29 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .chip { padding: 8px 14px; border-radius: 999px; border: 1px solid var(--pill-line); background: transparent; color: var(--ui); font: 500 13px/1 var(--f-ui); cursor: pointer; }
 .chip[aria-pressed="true"] { background: var(--ui); color: var(--pill); border-color: var(--ui); }
 
-/* ── reader sheet ───────────────────────────── */
-.scrim { position: fixed; inset: 0; z-index: 40; background: rgba(10,10,10,.45); backdrop-filter: blur(4px); display: grid; place-items: end center;
-  padding: 0 max(12px, env(safe-area-inset-right, 0px)) 0 max(12px, env(safe-area-inset-left, 0px)); }
-.sheet { width: min(460px, 100%); max-height: 92%; overflow: auto; background: var(--pill); color: var(--ui);
-  border-radius: 28px 28px 0 0; padding: 14px 18px calc(22px + env(safe-area-inset-bottom, 0px)); animation: up .45s cubic-bezier(.2,.8,.2,1); }
-@keyframes up { from { translate: 0 100%; } }
-.grab { width: 40px; height: 5px; border-radius: 3px; background: var(--pill-line); margin: 0 auto 14px; }
-.sheet .paper { margin: 0; aspect-ratio: auto; padding-bottom: 16px; transform: none; opacity: 1; animation: none; cursor: default; box-shadow: 0 2px 12px rgba(0,0,0,.18); border-radius: 3px; }
-.sheet .cols i { height: 40px; }
+/* ── a picked paper: it moves up under the date pill and the papers become a swipeable row ── */
+.focus { position: fixed; inset: 0; z-index: 15; display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+  padding-top: calc(env(safe-area-inset-top, 0px) + 176px); background: transparent; transition: background .35s ease .25s; --cw: min(380px, 80vw); }
+.focus.is-on { background: var(--ground); }
+.f-track { width: 100%; display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px calc((100% - var(--cw)) / 2) 24px; scrollbar-width: none; }
+.f-track::-webkit-scrollbar { display: none; }
+.f-card { flex: none; width: var(--cw); scroll-snap-align: center; transition: opacity .4s ease; }
+.f-card .paper { margin: 0; transform: none; animation: none; opacity: 1; cursor: default; border-radius: 2px; box-shadow: 0 18px 40px rgba(0,0,0,.3); }
+.focus:not(.is-settled) .f-card:not(.is-main) { opacity: 0; }
+.f-dots { display: flex; gap: 6px; margin: 2px 0 4px; transition: opacity .3s; }
+.f-dots i { width: 6px; height: 6px; border-radius: 3px; background: rgba(254, 250, 224, .35); transition: width .3s, background .3s; }
+.f-dots i.on { width: 18px; background: #fefae0; }
+.focus .meta, .focus .actions { width: var(--cw); transition: opacity .3s; }
+.focus:not(.is-settled) .f-dots, .focus:not(.is-settled) .meta, .focus:not(.is-settled) .actions { opacity: 0; }
+.focus .meta { color: rgba(254, 250, 224, .8); }
+.shut { width: 52px; height: 52px; border-radius: 50%; border: 1px solid var(--pill-line); background: var(--pill); color: var(--ui); cursor: pointer; display: grid; place-items: center; font: 400 22px/1 var(--f-ui); }
+.shut:focus-visible { outline: 3px solid var(--press); outline-offset: 2px; }
 .meta { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 16px 2px 0; color: var(--ui-2); font-size: 13px; }
 .actions { display: flex; gap: 10px; margin-top: 16px; }
 .read { flex: 1; display: flex; justify-content: center; align-items: center; gap: 8px; height: 52px; border-radius: 999px;
   background: var(--ui); color: var(--pill); font: 600 15px/1 var(--f-ui); text-decoration: none; }
 .read[aria-disabled="true"] { background: transparent; color: var(--ui-2); border: 1px dashed var(--ui-2); pointer-events: none; }
-.save { width: 52px; height: 52px; border-radius: 50%; border: 1px solid var(--pill-line); background: transparent; color: var(--ui); cursor: pointer; display: grid; place-items: center; }
+.save { width: 52px; height: 52px; border-radius: 50%; border: 1px solid var(--pill-line); background: var(--pill); color: var(--ui); cursor: pointer; display: grid; place-items: center; }
 .save[aria-pressed="true"] { color: var(--press); }
 .save[aria-pressed="true"] svg path { fill: currentColor; }
 .read:focus-visible, .save:focus-visible { outline: 3px solid var(--press); outline-offset: 2px; }
@@ -226,7 +248,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 @media (prefers-reduced-motion: reduce) {
   .paper, .row { animation: none; opacity: 1; }
   .paper, .dial span { transition: none; }
-  .sheet { animation: none; }
+  .focus, .f-card, .paper { transition: none !important; }
 }
 </style>
 <style>
@@ -297,8 +319,13 @@ body::before { background: var(--sage); }
   </div>
 </nav>
 
-<div class="scrim" id="scrim" hidden>
-  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetHed" id="sheet"></div>
+<div class="focus" id="focus" role="dialog" aria-modal="true" aria-label="Front pages" hidden>
+  <div class="f-track" id="track"></div>
+  <div class="f-dots" id="dots" aria-hidden="true"></div>
+  <div class="meta" id="fmeta"></div>
+  <div class="actions"><a class="read" id="fread" target="_blank" rel="noopener">Read the piece <span aria-hidden="true">→</span></a>
+    <button class="save" id="saveBtn" aria-pressed="false" aria-label="Save this piece"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 3.5h10v17l-5-3.6-5 3.6z"/></svg></button>
+    <button class="shut" id="shut" aria-label="Back to the stack">&times;</button></div>
 </div>
 
 <script src="pieces.js"></script>
@@ -323,18 +350,35 @@ const kinds = [...new Set(PIECES.map(p => p.kind))];
 
 $("#updated").innerHTML = `Last edition: <b>${fmtShort(NEWEST)}</b> · ${PIECES.filter(p => !p.sample).length} pieces`;
 
-function frontPage(p, i, inSheet) {
-  const tilt = inSheet ? 0 : ((i * 37) % 5 - 2) * 0.5;
-  const tag = p.sample ? `<span class="tag">Example</span>` : `<span>${esc(p.kind)}</span>`;
-  const el = inSheet ? "article" : "button";
-  return `<${el} class="paper" ${inSheet ? "" : `type="button" data-id="${p.id}"`} style="--i:${i};--tilt:${tilt}deg;--accent:${p.accent}" ${inSheet ? "" : `aria-label="${esc(p.title)}, ${esc(p.kind)}, ${fmtShort(p.date)}"`}>
-    <div class="ear">${tag}<span>No. ${String(p.no).padStart(3, "0")}</span></div>
-    <div class="mast m-${p.style}">${esc(p.mast)}</div>
-    <div class="dateline"><span>${fmtShort(p.date)}</span><span>${esc(p.kind)} edition</span><span>Free</span></div>
-    <div class="kicker">${esc(p.kind)}</div>
-    <h2 class="hed" ${inSheet ? 'id="sheetHed"' : ""}>${esc(p.title)}</h2>
-    <div class="body"><p class="dek">${esc(p.dek)}</p><div class="plate" data-glyph="${esc(p.glyph)}"></div>
-      <div class="cols"><i></i><i></i><i></i></div></div>
+/* A front page in the Chicago Tribune's layout, set entirely in type: no photos needed. */
+const tagline = { Substack: "Notes, essays and lists, sent by email", "The Triangle": "The independent student newspaper of Drexel University" };
+const turn = p => p.mast === "The Triangle" ? "Continued at thetriangle.org" : "Continued on Substack";
+function frontPage(p, i, still) {
+  const tilt = still ? 0 : ((i * 37) % 5 - 2) * 0.5;
+  const others = PIECES.filter(x => x.id !== p.id);
+  const side = others[(p.no + 1) % others.length];
+  const plan = [0, 1, 2].map(k => others[(p.no + k * 2) % others.length]);
+  const d = new Date(p.date + "T12:00:00");
+  const el = still ? "article" : "button";
+  return `<${el} class="paper" ${still ? "" : `type="button" data-id="${p.id}"`} style="--i:${i};--tilt:${tilt}deg" ${still ? "" : `aria-label="${esc(p.title)}, ${esc(p.kind)}, ${fmtShort(p.date)}"`}>
+    <div class="n-mast">${esc(p.mast)}</div>
+    <div class="n-dl"><b>${esc(fmtLong(p.date))}</b><span>${esc(p.kind)} edition</span><em>${esc(tagline[p.mast] || "Written by Shaivi Sharma")}</em></div>
+    <div class="n-fine"><span>Vol. ${d.getFullYear() - 2023} No. ${String(p.no).padStart(3, "0")}</span><span>shaivi/writing</span><span>Free</span></div>
+    <div class="n-grid">
+      <div class="n-side">
+        <div class="n-orn" aria-hidden="true">${esc(p.glyph)}</div>
+        <p class="n-cap">From the ${esc(p.kind.toLowerCase())} desk.</p>
+        <h4>${esc(side.title)}</h4>
+        <p class="n-sub">${esc(side.dek)}</p>
+        <p class="n-by">${esc(side.kind)}<small>${esc(side.mast)}</small></p>
+      </div>
+      <div class="n-main">
+        <h2 class="n-hed">${esc(p.title)}</h2>
+        <div class="n-decks"><p><b>${esc(p.kind)}:</b> ${esc(p.dek)}</p><p>By Shaivi Sharma, filed ${esc(fmtShort(p.date))}.</p></div>
+        <div class="n-story"><p class="n-by">By Shaivi Sharma<small>${esc(p.mast)}</small></p><p>${esc(p.dek)}</p><span class="n-type"></span><span class="n-type"></span><p class="n-turn"><b>›</b> ${turn(p)}</p></div>
+      </div>
+    </div>
+    <div class="n-plan"><h5>Also in this issue</h5>${plan.map(x => `<div><b>${esc(x.title)}</b>${esc(x.kind)}</div>`).join("")}</div>
   </${el}>`;
 }
 
@@ -392,30 +436,102 @@ function track() {
 addEventListener("scroll", () => requestAnimationFrame(track), { passive: true });
 addEventListener("resize", track);
 
-function open(id) {
-  const p = PIECES.find(x => x.id === id);
-  const isSaved = saved.has(id);
-  $("#sheet").innerHTML = `<div class="grab"></div>${frontPage(p, 0, true)}
-    <div class="meta"><span>${fmtLong(p.date)}</span><span>${esc(p.kind)}</span></div>
-    <div class="actions">
-      ${p.sample
-        ? `<a class="read" aria-disabled="true">Example slot, no link yet</a>`
-        : `<a class="read" href="${esc(p.url)}" target="_blank" rel="noopener">Read the piece <span aria-hidden="true">→</span></a>`}
-      <button class="save" id="saveBtn" aria-pressed="${isSaved}" aria-label="Save this piece"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 3.5h10v17l-5-3.6-5 3.6z"/></svg></button>
-    </div>`;
-  $("#scrim").hidden = false;
-  $("#saveBtn").addEventListener("click", e => {
-    const on = !saved.has(id);
-    on ? saved.add(id) : saved.delete(id);
-    persist();
-    e.currentTarget.setAttribute("aria-pressed", on);
-    if (state.savedOnly) render();
-  });
-  ($("#sheet .read:not([aria-disabled])") || $("#saveBtn")).focus();
+/* Tapping a paper: the rest of the stack slides off to either side, the picked one rises to the top,
+   and the papers become a row you can swipe through. Closing plays it backwards. */
+const focus = $("#focus"), trackEl = $("#track");
+let openList = [], openId = null, busy = false;
+const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const wait = ms => new Promise(r => setTimeout(r, calm ? 0 : ms));
+function fly(el, from, to, ms) {
+  const dx = from.left - to.left, dy = from.top - to.top, k = from.width / to.width;
+  return calm ? Promise.resolve() : el.animate([{ transform: `translate(${dx}px,${dy}px) scale(${k})` }, { transform: "none" }],
+    { duration: ms, easing: "cubic-bezier(.5,0,.2,1)" }).finished;
 }
-function close() { $("#scrim").hidden = true; }
-$("#scrim").addEventListener("click", e => { if (e.target.id === "scrim") close(); });
-addEventListener("keydown", e => { if (e.key === "Escape") { close(); $("#filters").hidden = true; $("#bFilter").setAttribute("aria-pressed", state.kinds.size > 0); } });
+function showMeta(id) {
+  const p = PIECES.find(x => x.id === id); openId = id;
+  $("#fmeta").innerHTML = `<span>${fmtLong(p.date)}</span><span>${esc(p.kind)}</span>`;
+  const r = $("#fread");
+  if (p.sample) { r.removeAttribute("href"); r.setAttribute("aria-disabled", "true"); r.textContent = "Example slot, no link yet"; }
+  else { r.href = p.url; r.removeAttribute("aria-disabled"); r.innerHTML = `Read the piece <span aria-hidden="true">→</span>`; }
+  press($("#saveBtn"), saved.has(id));
+  $("#dots").querySelectorAll("i").forEach((d, k) => d.classList.toggle("on", openList[k].id === id));
+  trackEl.querySelectorAll(".f-card").forEach(c => c.classList.toggle("is-main", c.dataset.id === id));
+  setDate(p.date);
+}
+async function open(id) {
+  if (busy) return; busy = true;
+  openList = visible();
+  const rack = $("#view .rack"), src = rack && rack.querySelector(`[data-id="${id}"]`);
+  const at = openList.findIndex(x => x.id === id);
+  trackEl.innerHTML = openList.map(p => `<div class="f-card" data-id="${p.id}">${frontPage(p, 0, true)}</div>`).join("");
+  $("#dots").innerHTML = openList.map(() => "<i></i>").join("");
+  showMeta(id);
+  if (src) {
+    rack.querySelectorAll(".paper").forEach((el, k) => { el.style.setProperty("--side", k === at ? 0 : (k % 2 ? 1 : -1)); el.style.setProperty("--delay", `${Math.abs(k - at) * 45}ms`); });
+    const from = src.getBoundingClientRect();
+    rack.classList.add("is-away"); src.classList.add("is-lifted");
+    focus.hidden = false;
+    const card = trackEl.children[at];
+    trackEl.scrollLeft = card.offsetLeft - (trackEl.clientWidth - card.offsetWidth) / 2;
+    requestAnimationFrame(() => focus.classList.add("is-on"));
+    await fly(card, from, card.getBoundingClientRect(), 620);
+  } else { focus.hidden = false; focus.classList.add("is-on"); const card = trackEl.children[at]; trackEl.scrollLeft = card.offsetLeft - (trackEl.clientWidth - card.offsetWidth) / 2; }
+  focus.classList.add("is-settled");
+  document.documentElement.style.overflow = "hidden";
+  ($("#fread[href]") || $("#saveBtn")).focus({ preventScroll: true });
+  busy = false;
+}
+async function close() {
+  if (focus.hidden || busy) return; busy = true;
+  const card = trackEl.querySelector(`.f-card[data-id="${openId}"]`);
+  const rack = $("#view .rack"), dst = rack && rack.querySelector(`[data-id="${openId}"]`);
+  focus.classList.remove("is-settled");
+  document.documentElement.style.overflow = "";
+  if (dst && card) {
+    dst.scrollIntoView({ block: "center" });
+    rack.querySelectorAll(".paper").forEach(el => el.classList.remove("is-lifted"));
+    dst.classList.add("is-lifted");
+    const k = [...rack.children].indexOf(dst);
+    rack.querySelectorAll(".paper").forEach((el, j) => { el.style.setProperty("--side", j === k ? 0 : (j % 2 ? 1 : -1)); el.style.setProperty("--delay", `${Math.abs(j - k) * 45}ms`); });
+    focus.classList.remove("is-on");
+    const from = card.getBoundingClientRect(), to = dst.getBoundingClientRect();
+    rack.classList.remove("is-away");
+    if (!calm) await card.animate([{ transform: "none" }, { transform: `translate(${to.left - from.left}px,${to.top - from.top}px) scale(${to.width / from.width})` }],
+      { duration: 560, easing: "cubic-bezier(.5,0,.2,1)", fill: "forwards" }).finished;
+    dst.classList.remove("is-lifted");
+  }
+  focus.hidden = true; focus.classList.remove("is-on");
+  trackEl.innerHTML = "";
+  const back = $(`#view [data-id="${openId}"]`); if (back) back.focus({ preventScroll: true });
+  track(); busy = false;
+}
+let swipeT;
+trackEl.addEventListener("scroll", () => { clearTimeout(swipeT); swipeT = setTimeout(() => {
+  const mid = trackEl.scrollLeft + trackEl.clientWidth / 2;
+  let best = null, bd = Infinity;
+  trackEl.querySelectorAll(".f-card").forEach(c => { const d = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid); if (d < bd) { bd = d; best = c; } });
+  if (best && best.dataset.id !== openId) showMeta(best.dataset.id);
+}, 80); }, { passive: true });
+trackEl.addEventListener("click", e => {
+  const c = e.target.closest(".f-card");
+  if (!c) { close(); return; }
+  if (c.dataset.id !== openId) c.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+});
+focus.addEventListener("click", e => { if (e.target === focus) close(); });
+$("#shut").onclick = close;
+$("#saveBtn").addEventListener("click", e => {
+  const on = !saved.has(openId);
+  on ? saved.add(openId) : saved.delete(openId);
+  persist(); press(e.currentTarget, on);
+  if (state.savedOnly) render();
+});
+addEventListener("keydown", e => {
+  if (e.key === "Escape") { close(); $("#filters").hidden = true; $("#bFilter").setAttribute("aria-pressed", state.kinds.size > 0); }
+  if (!focus.hidden && (e.key === "ArrowRight" || e.key === "ArrowLeft")) {
+    const k = openList.findIndex(x => x.id === openId) + (e.key === "ArrowRight" ? 1 : -1);
+    const c = trackEl.children[k]; if (c) c.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+  }
+});
 
 /* Dock */
 function press(btn, on) { btn.setAttribute("aria-pressed", on); }
