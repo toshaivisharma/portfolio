@@ -1,6 +1,6 @@
 # shaivi's portfolio
 
-Personal site: a hand-drawn film strip homepage, a stills (disco ball) page, a projects page, and a live Spotify "receipt" of shaivi's top tracks.
+Personal site: a hand-drawn film strip homepage, a stills (disco ball) page, a projects page, a writing page, and a live Spotify "receipt" of shaivi's top tracks.
 
 ## Deploys
 
@@ -13,6 +13,7 @@ This repo is connected to Vercel. Every push to `main` goes live automatically, 
 | `index.html` | Homepage, about overlay and the receipt overlay |
 | `stills/` | Disco ball photo page |
 | `projects/` | Projects page |
+| `writing/` | Writing page: a stack of newspaper front pages, one per piece |
 | `assets/` | Images and fonts shared by the pages |
 | `api/top-tracks.js` | Vercel serverless function that fetches the top tracks from Spotify |
 | `scripts/` | One-time Spotify token script and offline tests (`npm test`) |
