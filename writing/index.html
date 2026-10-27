@@ -180,6 +180,9 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   background: radial-gradient(circle at 30% 28%, rgba(255,255,255,.55), transparent 55%), radial-gradient(circle at 80% 90%, rgba(255,255,255,.18), transparent 50%); }
 .np-photo::after { content: ""; position: absolute; inset: 0; background: radial-gradient(#111 32%, transparent 36%) 0 0 / .9cqw .9cqw; opacity: .55; mix-blend-mode: multiply; }
 .np-photo i { position: relative; z-index: 1; font: 900 13cqw/1 var(--f-head); font-style: normal; color: #f3f1ea; text-shadow: 0 .4cqw 1cqw rgba(0,0,0,.4); }
+.np-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.08); }
+.np-photo:has(img)::before { display: none; }
+.np-photo:has(img)::after { opacity: .28; }
 .np-cap { margin: 0 0 .8cqw; font: italic 400 1.3cqw/1.25 var(--f-body); color: #444; }
 .np-side h4 { margin: 0 0 .8cqw; font: 700 2.9cqw/1.02 var(--f-head); letter-spacing: -.01em; }
 
@@ -372,7 +375,7 @@ function frontPage(p, i) {
         <h4 class="np-sh">${esc(side.title)}</h4><div class="np-txt">${body(side)}</div></div>
       <div class="np-main"><span class="np-kick">${esc(p.kind)}</span><h2 class="np-hed">${esc(p.title)}</h2>
         <div class="np-cols"><div><p class="np-dek">${esc(p.dek)}</p><p class="np-by">By Shaivi Sharma</p><div class="np-txt c2">${body(p)}</div></div>
-          <div class="np-side"><div class="np-photo"><i>${esc(p.glyph)}</i></div><p class="np-cap">${esc(p.mast)}, ${fmtShort(p.date)}.</p><div class="np-txt">${body(p)}</div></div></div></div>
+          <div class="np-side"><div class="np-photo">${p.photo ? `<img src="${esc(p.photo)}" alt="" loading="lazy" decoding="async">` : `<i>${esc(p.glyph)}</i>`}</div><p class="np-cap">${p.photo ? "Photo by Shaivi Sharma." : `${esc(p.mast)}, ${fmtShort(p.date)}.`}</p><div class="np-txt">${body(p)}</div></div></div></div>
     </div></div></button>`;
 }
 
