@@ -64,6 +64,7 @@
   }
   @media (prefers-reduced-motion: reduce) { .view, .hint { transition-duration: .01ms; } }
 
+  html, body, #app { background-image: radial-gradient(rgba(254, 250, 224, .12) 1px, transparent 1.2px); background-size: 22px 22px; }
   /* film-strip edges, same as the about page */
   :root { --edge: 44px; }
   .film-edge { position: fixed; top: 0; bottom: 0; width: var(--edge); z-index: 20; pointer-events: none; background: repeat-y 0 0 / 100% auto; }
@@ -434,11 +435,11 @@ function mountTextures(photo, img, m, seed) {
 /* ============================ scene ============================ */
 const ballView = document.getElementById("ball-view");
 const scene = new THREE.Scene();
-scene.background = new THREE.Color("#757d64");
+scene.background = null;
 const camera = new THREE.PerspectiveCamera(FOV, 1, .1, 100);
-const renderer = new THREE.WebGLRenderer({ antialias: true });
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-renderer.setClearColor(0x757d64, 1);
+renderer.setClearColor(0x757d64, 0);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 ballView.prepend(renderer.domElement);
 
