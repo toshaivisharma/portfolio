@@ -70,9 +70,6 @@ a.chip:hover, a.chip:focus-visible { background: var(--on-sage); color: var(--sa
 .ph { border-bottom: 1px dashed rgba(254, 250, 224, .55); opacity: .7; }
 .closing { padding: 44px 0; border-bottom: 1px solid var(--cv-rule, rgba(254, 250, 224, .28)); text-align: center; }
 .closing p { margin: 0; font-size: clamp(15px, 1.35vw, 17px); line-height: 1.85; }
-.toast { position: fixed; left: 50%; bottom: 28px; z-index: 40; padding: 10px 18px; background: var(--on-sage); color: var(--sage); border-radius: 999px; font-size: 13px; letter-spacing: .06em;
-  translate: -50% 20px; opacity: 0; pointer-events: none; transition: opacity .25s ease, translate .25s ease; }
-.toast.is-on { opacity: 1; translate: -50% 0; }
 /* each section rises in as you reach it */
 .rise { opacity: 0; translate: 0 18px; transition: opacity .6s ease, translate .7s cubic-bezier(.22, 1, .36, 1); }
 .rise.is-seen { opacity: 1; translate: 0 0; }
@@ -114,7 +111,7 @@ a.chip:hover, a.chip:focus-visible { background: var(--on-sage); color: var(--sa
 
   <section class="block rise" aria-labelledby="l-pro">
     <h1 class="label" id="l-pro">professional</h1>
-    <a class="pdf-btn pdf-link" href="shaivi-sharma-resume.pdf" target="_blank" rel="noopener">I prefer a pdf <span class="ne" aria-hidden="true">&#8599;</span></a>
+    <a class="pdf-btn pdf-link" href="https://drive.google.com/file/d/1b54FDbpEJZ_hejZ918vEmAnbaya4Jwom/view?usp=sharing" target="_blank" rel="noopener">I prefer a pdf <span class="ne" aria-hidden="true">&#8599;</span></a>
     <p>I am a <span class="role" id="role" data-roles="finance &amp; econ student|case comp captain|chapter president|columnist">finance &amp; econ student</span>.</p>
     <p>I love the intersection of economics, data, and storytelling, and I like taking a messy process and making it actually work.</p>
   </section>
@@ -151,7 +148,7 @@ a.chip:hover, a.chip:focus-visible { background: var(--on-sage); color: var(--sa
   </section>
 
   <section class="closing rise">
-    <p>For more details about my experience, please <a class="chip pdf-link" href="shaivi-sharma-resume.pdf" target="_blank" rel="noopener">download the pdf version</a>!</p>
+    <p>For more details about my experience, please <a class="chip pdf-link" href="https://drive.google.com/file/d/1b54FDbpEJZ_hejZ918vEmAnbaya4Jwom/view?usp=sharing" target="_blank" rel="noopener">download the pdf version</a>!</p>
   </section>
 </main>
 <footer class="site-foot">
@@ -162,7 +159,6 @@ a.chip:hover, a.chip:focus-visible { background: var(--on-sage); color: var(--sa
     <li><a href="https://substack.com/@shaivisharma" target="_blank" rel="noopener">substack <span aria-hidden="true">&#8599;</span></a></li>
   </ul>
 </footer>
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script>
 (() => {
   const cats = document.querySelector(".cats"), plus = cats.querySelector(".plus"), list = cats.querySelector(".cat-list");
@@ -196,17 +192,6 @@ a.chip:hover, a.chip:focus-visible { background: var(--on-sage); color: var(--sa
   if (!("IntersectionObserver" in window)) { els.forEach((e) => e.classList.add("is-seen")); return; }
   const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("is-seen"); io.unobserve(e.target); } }), { threshold: .12 });
   els.forEach((e) => io.observe(e));
-})();
-
-// until the pdf is uploaded, the pdf links say so instead of opening a 404
-(() => {
-  const links = document.querySelectorAll(".pdf-link"), toast = document.getElementById("toast"); let t;
-  fetch(links[0].getAttribute("href"), { method: "HEAD" }).then((r) => { if (r.ok) return; throw 0; }).catch(() => {
-    links.forEach((a) => a.addEventListener("click", (e) => {
-      e.preventDefault(); toast.textContent = "the pdf is on its way, check back soon"; toast.classList.add("is-on");
-      clearTimeout(t); t = setTimeout(() => toast.classList.remove("is-on"), 2400);
-    }));
-  });
 })();
 </script>
 </body>
