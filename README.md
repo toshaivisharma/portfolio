@@ -20,3 +20,7 @@ This repo is connected to Vercel. Every push to `main` goes live automatically, 
 ## Secrets
 
 The Spotify keys (`SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, `SPOTIFY_REFRESH_TOKEN`) live only in Vercel's Environment Variables. Never commit them; `.env` is gitignored.
+
+## Making a change
+
+Edit the files, commit, and push to `main`. Vercel builds it within a minute or two; check the Deployments tab of the `spotify-receipt` project on vercel.com if something looks off.
