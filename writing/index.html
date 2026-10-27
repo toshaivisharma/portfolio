@@ -149,7 +149,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .paper:focus-visible { outline: 3px solid #fefae0; outline-offset: 4px; }
 .rack.is-deck .paper.far { opacity: 0; pointer-events: none; }
 .rack.is-deck .paper.side { filter: brightness(.96); }
-.rack.is-deck .paper.here { cursor: default; }
+.rack.is-deck .paper.here { cursor: pointer; }
+.rack.is-deck .paper.here:hover { translate: 0 -8px; }
 
 /* ── a folded front page: the top half of a broadsheet, set in type (no photos needed) ── */
 .np { position: absolute; inset: 0; padding: 3.2cqw 4cqw 0; display: flex; flex-direction: column; }
@@ -268,7 +269,10 @@ body::before { background: var(--sage); }
 .updated, .empty { color: rgba(254, 250, 224, .75); } .updated b, .empty b { color: var(--on-sage); }
 .app { width: 100%; }
 #view { flex: none; max-width: none; margin: 0; padding: 0; }
-.site-foot { padding-bottom: 110px; }   /* clear of the floating dock */
+/* only the papers: no date pill, dock, filters or reading bar */
+.top, .dock, .filters, .deckbar { display: none !important; }
+.rack { margin-top: 40px; }
+.app { padding-bottom: 60px; }
 @media (max-width: 760px) { body { padding: 0 calc(var(--edge) + 10px); } }
 </style>
 </head>
@@ -358,7 +362,7 @@ function frontPage(p, i) {
   const inside = [0, 1, 2].map(k => others[(p.no + k * 2) % others.length]);
   const d = new Date(p.date + "T12:00:00");
   const wd = d.toLocaleDateString("en-US", { weekday: "long" });
-  return `<button class="paper" type="button" data-id="${p.id}" style="--i:${i}" aria-label="${esc(p.title)}, ${esc(p.kind)}, ${fmtShort(p.date)}"><div class="np">
+  return `<button class="paper" type="button" data-id="${p.id}" style="--i:${i}" aria-label="${esc(p.title)}, ${esc(p.kind)}, ${fmtShort(p.date)}" title="${esc(p.title)}"><div class="np">
     <div class="np-top"><div class="np-ear"><b>${esc(p.kind)}</b>No. ${String(p.no).padStart(3, "0")} · shaivi/writing</div>
       <div class="np-mast">${esc(p.mast)}</div>
       <div class="np-ear r"><b>${wd}</b>${fmtShort(p.date)} · Free</div></div>
@@ -397,7 +401,9 @@ function render() {
   const rack = view.querySelector(".rack");
   rack.querySelectorAll(".paper").forEach((el, k) => el.addEventListener("click", () => {
     if (dragged) return;
-    if (mode === "stack") openDeck(k); else if (k !== here) go(k);
+    if (mode === "stack") openDeck(k);
+    else if (k !== here) go(k);
+    else if (!list[k].sample) window.open(list[k].url, "_blank", "noopener");
   }));
   $("#shut").onclick = closeDeck;
   $("#saveBtn").onclick = e => {
@@ -463,8 +469,8 @@ function show() {
 function openDeck(k) {
   const rack = $("#view .rack"); if (!rack) return;
   here = k; mode = "deck";
-  const top = rack.getBoundingClientRect().top, bar = $(".top").getBoundingClientRect().bottom;
-  cy = Math.max(0, bar + 26 - top);
+  const top = rack.getBoundingClientRect().top;
+  cy = Math.max(0, Math.max(96, innerHeight * 0.16) - top);
   rack.classList.replace("is-stack", "is-deck");
   document.documentElement.classList.add("deck-open");
   press($("#bRack"), true); press($("#bList"), false);
@@ -535,6 +541,8 @@ function track() {
 }
 addEventListener("scroll", () => requestAnimationFrame(track), { passive: true });
 
+/* In the swipe row, a tap anywhere off the papers folds them back into the stack. */
+addEventListener("click", e => { if (mode === "deck" && !e.target.closest(".paper, .deckbar, .dock, .filters")) closeDeck(); });
 addEventListener("keydown", e => {
   if (e.key === "Escape") { closeDeck(); $("#filters").hidden = true; $("#bFilter").setAttribute("aria-pressed", state.kinds.size > 0); }
   if (mode === "deck" && e.key === "ArrowRight") go(here + 1);
