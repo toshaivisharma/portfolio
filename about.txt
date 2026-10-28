@@ -1,0 +1,90 @@
+SHAIVI SHARMA: PORTFOLIO (plain text)
+Website: https://shaivisharma.vercel.app
+Email: toshaivisharma@gmail.com
+LinkedIn: https://www.linkedin.com/in/shaivisharma/
+Substack: https://substack.com/@shaivisharma
+
+==============================
+PROJECTS
+==============================
+
+1. ECONOMY VS. YOUR ECONOMY
+Type: interactive dashboard
+Data: FRED (Federal Reserve Bank of St. Louis), 2000 to today
+Link: https://economy-vs-your-economy.streamlit.app/
+The headline economy is stock prices and GDP. Your economy is your household's income, your rent and your groceries. Using FRED data from the Federal Reserve Bank of St. Louis, this dashboard shows how far the two have drifted apart since 2000: after inflation the Nasdaq is up 242%, while median household income is up 11%.
+
+2. ECONOMY FEELS FINE
+Type: interactive data story
+Link: https://economy-feels-fine.vercel.app/
+Economy feels fine is a field of hundreds of coloured dots, and every one of them is a moment in the economy. Hover or tap any dot to read what happened.
+
+3. MEDIA BIAS CHART
+Type: interactive chart
+Sources: 76
+Link: https://media-bias-chart.vercel.app/index.html
+Every outlet tells the story a little differently. The media bias chart sorts 76 of the best-known news sources by their political lean, from left to right, so you can see where your own news sits.
+
+4. MY DIORAMA
+Type: website, art
+Made: 2026
+Link: https://my-diorama.vercel.app/
+My diorama is a small online gallery of art I have made from childhood to now. The pieces hang on a dark wall under track lights, and you can step back, zoom in and look at each one up close.
+
+5. THE BIG 1
+Type: case competition deck (15 slides)
+Team: Shaivi Sharma, Hassan Ali, Sameeksha Dhandhania, Aayan Mallhi
+The big 1 is a case pitch written as PwC, built around building trust in society and solving important problems. It walks through what was at risk for the client, from corporate development disruption to international tax complexity and an ERP migration, and how we would solve it while keeping full audit independence.
+
+==============================
+RESUME (from the resume page)
+==============================
+
+Professional: I am a finance & econ student. I love the intersection of economics, data, and storytelling, and I like taking a messy process and making it actually work.
+
+Study: Economics & Finance (Honors) at Drexel University, class of 2028, with a minor in international business and product design. A.J. Drexel Scholar, Dean's List. Favorite classes: game theory, econometrics, and economics & big data.
+
+Experience:
+- Co-op, global treaty controllership team, Chubb. Reconciled premium against the ledger, chased down why the numbers didn't match, and rebuilt bordereaux workflows in Alteryx so settlement across APAC and Europe stopped taking forever.
+- Product management intern, GoTrust (New Delhi). Worked on a data privacy compliance platform for India's new privacy law, figuring out which customers needed it most and how to show it to them.
+- Research fund scholar, Drexel (one year). Cleaned and analyzed teaching data in Excel and Stata.
+
+Competitions & leadership:
+- Captained the team to first place at the PwC Challenge case competition, pitching an ESG scoring framework and an M&A advisory recommendation.
+- Chapter president, Climate Cardinals. Turned a big, loose group into small teams with owners and actually-shipped campus projects.
+- Economics Society e-board; USGA freshman senator.
+- Wrote a short thesis on monday.com, building the DCF and comps myself and arguing the market had it priced too high.
+
+Writing & policy:
+- Opinion writer and columnist, The Triangle; longer pieces on Substack.
+- Senior editor for educational policy, Perrin Research Institution for Human-Centered AI (a UNESCO policy lab). Leads a global team of writers interviewing people from Y Combinator, the UN, DHS, and Apple, and looks after an AI literacy textbook used by students around the world.
+
+Tools: Excel, SQL, Python, Alteryx, Stata, Tableau. Design: Figma, Framer, Canva.
+
+Resume PDF: https://drive.google.com/file/d/1b54FDbpEJZ_hejZ918vEmAnbaya4Jwom/view
+
+==============================
+ABOUT ME (from the homepage)
+==============================
+
+Hi, I'm Shaivi! I made this website to bring my work and my creative side into one place, and I'm grateful you're taking the time to get to know me a little better.
+
+In a nutshell, I'm an Economics and Finance Honors student at Drexel University, based in Philadelphia and originally from India. Most of my work comes down to finding where something gets stuck and fixing it. At GoTrust in New Delhi, I learned how a startup decides what to build and who to build it for, and how much depends on listening to customers before pitching to them. Chubb was my first co-op and my first time inside a large company, where I learned how one small mismatch in the data can slow down an entire team, and how much better the work gets when you stop and ask why a number looks off. Competitions gave me the same puzzle on a deadline, at the College Fed Challenge as one of two freshmen on Drexel's team and at PwC's case competition, where I captained the winning team. Next, I want to bring that to wealth management or consulting, where a good answer only works if the client understands it.
+
+Writing keeps me sharp at that part. I write opinion pieces for The Triangle and lead an editorial team at the Perrin Institute, and on Substack I write about my own life instead. I also lead Drexel's Climate Cardinals chapter, where 50 volunteers teach climate literacy across campus, and I designed almost everything on this site myself.
+
+==============================
+WRITING
+==============================
+
+- Majoring in Debt? (Opinion, The Triangle, Apr 2025): Is a degree still worth what it costs? Weighing the wage premium against the debt, and the paths around it. https://www.thetriangle.org/article/majoring-in-debt
+- $5 or $150? Either way, your tote bag is doing the talking (Opinion, The Triangle, May 2025): what the bag on your shoulder says about money, identity and belonging on campus. https://www.thetriangle.org/article/5-or-150-either-way-your-tote-bag-is-doing-the-talking
+- Humans of Drexel: The guy behind the front desk (Profile, The Triangle, Jun 2025): Meet Taj McCoy, the Towers Hall desk coordinator. https://www.thetriangle.org/article/humans-of-drexel-the-guy-behind-the-front-desk
+- The Single Child Syndrome (Essay, Substack, Feb 2026): on solitude, self-sufficiency and feeling whole on your own. https://shaivisharma.substack.com/p/the-single-child-syndrome
+- notes on being unwritten (Essay, Substack, Aug 2026): what Peter Parker and Clementine Kruczynski taught me about memory, identity and being forgotten. https://shaivisharma.substack.com/p/notes-on-being-unwritten
+- incoming, q4 2026 (Newsletter, Substack, Oct 2026): a photo album, a year of memories, and a lot of lists. https://shaivisharma.substack.com/p/incoming-q4-2026
+
+==============================
+SITE ITSELF
+==============================
+I designed almost everything on shaivisharma.vercel.app myself: a hand-drawn film strip homepage, a card-catalogue projects drawer, a draggable disco ball of my photos, a newsstand of my writing, and a live Spotify "receipt" of my top songs pulled from the Spotify API.
